@@ -4,5 +4,6 @@ RUN mkdir /scraper
 WORKDIR /scraper
 COPY Gemfile /scraper/Gemfile
 COPY Gemfile.lock /scraper/Gemfile.lock
+RUN gem install bundler
 RUN bundle install
 COPY . /scraper
