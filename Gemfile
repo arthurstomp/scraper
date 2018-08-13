@@ -20,12 +20,19 @@ gem 'mongoid', '~> 7.0.1'
 gem 'bson_ext'
 
 gem 'devise'
+gem 'devise-jwt', '~> 0.5.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~>3.7'
   gem 'webmock'
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'mongoid-rspec'
+  gem 'simplecov', require: false
+  gem 'dotenv-rails'
 end
 
 group :development do
