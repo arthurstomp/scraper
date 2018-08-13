@@ -24,3 +24,5 @@
 .env
 # Ignore coverage report
 coverage
+# Ignore data files
+/data/*

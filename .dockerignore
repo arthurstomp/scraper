@@ -1,0 +1,8 @@
+.env
+.env.sample
+coverage
+/.bundle
+/log/*
+/tmp/*
+.byebug_history
+/config/master.key
