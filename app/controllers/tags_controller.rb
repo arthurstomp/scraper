@@ -6,6 +6,8 @@ class TagsController < ApplicationController
       Rails.logger.info "Tag #{tag.tag} from #{fetcher.from}"
       filtered_quotes = filter_quotes_attributes(tag.quotes)
       render json: {quotes: filtered_quotes}, status: 200
+    else
+      render nothing: true, status: 404
     end
   rescue => e
     Rails.logger.error(e)

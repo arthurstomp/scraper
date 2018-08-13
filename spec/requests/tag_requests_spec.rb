@@ -47,6 +47,17 @@ describe 'Tag requests', type: :request do
         expect(response.status).to eq 401
     end
 
+    it 'should return 404' do
+      fetcher = double(:tag_fetcher)
+      expect(fetcher).to receive(:fetch).and_return(nil)
+      expect(TagFetcher).to receive(:new).and_return(fetcher)
+
+      get "/quotes/test",
+        headers: headers
+      
+      expect(response.status).to eq 404
+    end
+
     describe 'response format' do
       before :each do
         get "/quotes/#{tag.tag}",
