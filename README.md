@@ -2,7 +2,7 @@
 
 ![ruby version][ruby_version_badge] [![Build Status](https://travis-ci.org/arthurstomp/scraper.svg?branch=master)](https://travis-ci.org/arthurstomp/scraper)
 
-Esse é o scraper, um simples web crawler para extrair quotes do site [http://quotes.toscrape.com/]().
+Esse é o scraper, um simples web crawler para extrair quotes do site [http://quotes.toscrape.com/](http://quotes.toscrape.com/).
 
 Scraper é um desafio proposto pela Inovamind.
 
