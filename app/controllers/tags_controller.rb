@@ -1,3 +1,5 @@
+require 'tag_fetcher'
+
 class TagsController < ApplicationController
   def show
     fetcher = TagFetcher.new(params[:tag])
