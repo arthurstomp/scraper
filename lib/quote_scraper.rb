@@ -1,13 +1,20 @@
 require 'open-uri'
 
+# class QuoteScraper
+# Get the page from the web and scrape quotes from it.
 class QuoteScraper
   @@base_uri = 'http://quotes.toscrape.com'
 
   attr_reader :doc, :tag, :quotes
   def initialize(tag)
     @tag = tag
-    fetch
-    parse_quotes
+  end
+
+  def fetch_and_scrape
+    doc = fetch
+    if(doc)
+      scrape_quotes(doc)
+    end
   end
 
   private
@@ -15,9 +22,13 @@ class QuoteScraper
   def fetch
     uri = @@base_uri + "/tag/#{@tag}"
     @doc = Nokogiri::HTML(open(uri))
+  rescue StandardError => e
+    Rails.logger.error("QuoteScraper: #{e}")
+    Rails.logger.error e.backtrace.join('\n')
+    nil
   end
 
-  def parse_quotes
+  def scrape_quotes(doc)
     @quotes = doc.search('.quote').map do |q|
       {
         text: parse_text(q),

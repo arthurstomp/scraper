@@ -15,13 +15,24 @@ describe QuoteScraper do
   end
 
   it 'should have 2 quotes' do
-    scraper = QuoteScraper.new tag
+    scraper = QuoteScraper.new(tag)
+    scraper.fetch_and_scrape
     expect(scraper.quotes.count).to eq 2
+  end
+
+  it 'should return nil when timeout' do
+    uri_template = Addressable::Template.new "http://quotes.toscrape.com/tag/{tag}"
+    stub_request(:get, uri_template).to_timeout
+
+    scraper = QuoteScraper.new tag
+    quotes = scraper.fetch_and_scrape
+    expect(quotes).to be_nil
   end
 
   describe 'quote attributes' do
     let!(:quote) do
       scraper = QuoteScraper.new tag
+      scraper.fetch_and_scrape
       scraper.quotes.first
     end
 
