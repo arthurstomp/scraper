@@ -107,7 +107,7 @@ $ echo 3e813d4b91357d606caf8152ad1e8d82 > config/master.key
 1. Componha com `docker-compose`
 
 ```bash
-$ docker-compose up -d
+$ UID=${UID} GID=${GID} docker-compose up -d
 ```
 
 ## Executando testes
