@@ -1,35 +1,30 @@
 # Scraper :bug:
 
 ![ruby version][ruby_version_badge] [![Build Status](https://travis-ci.org/arthurstomp/scraper.svg?branch=master)](https://travis-ci.org/arthurstomp/scraper)
+This is the scraper, a simple web crawler to extract quotes from [][http://quotes.toscrape.com/](http://quotes.toscrape.com/).
 
-Esse é o scraper, um simples web crawler para extrair quotes do site [http://quotes.toscrape.com/](http://quotes.toscrape.com/).
+## How it works
 
-Scraper é um desafio proposto pela Inovamind.
+The main features of scraper are implemented by the classes `lib/quote_scraper.rb` and `lib/tag_fetcher.rb`.
 
-## Funcionamento
+`QuoteScraper` is responsible for fetching on the site for the tag and extract its quotes.
 
-O funcionamento do Scraper é implementado em sua maioria pelas classes `lib/quote_scraper.rb` e `lib/tag_fetcher.rb`.
-
-A classe `QuoteScraper` é responsável por buscar a página na Internet pela tag e extrai as quotes.
-
-A classe `TagFetcher`, utilizado pelo `TagsController`, é responsável pelo lógica de onde serão obtidas as 
-quotes de uma Tag. Se ela estiver presente no banco de dados(cache) ele retornará essas quotes. Caso contrário
-será utilizado o `QuoteScraper` para obter as quotes pela Internet e o resultado é persistido no banco de dados.
+`TagFetcher` (used by `TagsController`) is responsible for the interface of from where the quotes of a tag will
+be fetched(from db or scraped from the site).
 
 ## API
 
 ### `GET /quotes/:tag`
 
-Cabeçalhos:
+Headers:
 
-* `Authorization` - JWT no formato `Bearer <jwt>`.
+* `Authorization` - JWT. Format: `Bearer <jwt>`.
 
-Parametros:
+Parameters:
 
-* `:tag` - Tag a ser pesquisada pela API. Caso ela não esteja presente no banco de dados, 
-Scraper irá extrair do site.
+* `:tag` - Tag to be fetched.
 
-Respostas:
+Awnsers:
 
 * `200` 
 
@@ -46,12 +41,12 @@ Respostas:
 }
 ```
 
-* `400` - Tag não encontrada.
-* `404` - Falhou em obter tag.
+* `404` - Tag not found.
+* `400` - Failed.
 
 ### `POST /users`
 
-Corpo:
+Body:
 
 ```json
 {
@@ -62,14 +57,13 @@ Corpo:
 }
 ```
 
-Respostas:
+Awnser:
 
-* `201` - Usuário criado. JWT retornado no cabeçalho `Authorization`.
-
+* `201` - User created. JWT at header `Authorization`.
 
 ### `POST /users/sign_in`
 
-Corpo:
+Body:
 
 ```json
 {
@@ -80,47 +74,47 @@ Corpo:
 }
 ```
 
-Respostas:
+Awnser:
 
- * `200` - Usuário logado. JWT retornado no cabeçalho `Authorization`.
+* `200` - User signed in. JWT at header `Authorization`.
 
 ### `DELETE /users/sign_out`
 
-Cabeçalhos:
+Header:
 
-* `Authorization` - JWT no formato `Bearer <jwt>`.
+* `Authorization` - JWT. Format: `Bearer <jwt>`.
 
-Respostas:
+Awnser:
 
-* `204` - Revoga JWT do usuário.
+* `204` - Revoke jwt of user.
 
-## Configuração
+## Configuring
 
-1. Crie o `config/master.key`
+1. Create `config/master.key`
 
 ```bash
 $ echo 3e813d4b91357d606caf8152ad1e8d82 > config/master.key
 ```
 
-> Nunca publique sua master.key. Esse é somente um projeto de demonstração, não possui credenciais confidencias.
+> Never publish your master.key. This is only a demonstration project. It doens't have confidentials credentials.
 
-1. Componha com `docker-compose`
+1. Compose with `docker-compose`
 
 ```bash
 $ UID=${UID} GID=${GID} docker-compose up -d
 ```
 
-## Executando testes
+## Running tests
 
 ```bash
 $ rspec spec
 ```
 
-## Exemplos de uso
+## Examples
 
-Usando [HTTPie](https://httpie.org/)
+Using [HTTPie](https://httpie.org/)
 
-* Criando usuário
+* Create user
 
 ```bash
 $ http :3000/users user:='{"email": "test@test.com", "password": "12341234"}'
@@ -144,7 +138,7 @@ X-Runtime: 0.133040
 }
 ```
 
-* Logando usuário
+* Sign in user
 
 ```bash
 $ http :3000/users/sign_in user:='{"email": "test@test.com", "password": "12341234"}'
@@ -169,7 +163,7 @@ X-Runtime: 0.127408
 
 ```
 
-* Buscando quotes
+* Fetching quotes
 
 ```bash
 $ http :3000/quotes/thinking Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxOWE1OGE1Ny0wY2Y0LTQxNGUtYmNlNi02ZTJiNjA0ZjA5NWYiLCJzdWIiOiI1YjcxYzI5YTQ4NGQ1ZDAwMDE3MTQyNTAiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE1MzQxODIxNDUsImV4cCI6IjE1MzQyNjg1NDUifQ.6GxIZxS8Rz4e757ejPKwgLNbguVj4Ziy4UtWPHDh0o0"
